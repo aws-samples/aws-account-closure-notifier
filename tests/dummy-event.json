@@ -1,0 +1,41 @@
+{
+    "eventVersion": "1.08",
+    "userIdentity": {
+      "type": "AssumedRole",
+      "principalId": "AROA1234567890EXAMPLE:test-principal",      
+      "arn": "arn:aws:sts::123456789012:assumed-role/Admin/test-principal",
+      "accountId": "123456789012",
+      "accessKeyId": "ASIA1234567890EXAMPLE",
+      "sessionContext": {
+        "sessionIssuer": {
+          "type": "Role",
+          "principalId": "AROA1234567890EXAMPLE",
+          "arn": "arn:aws:iam::123456789012:role/Admin",
+          "accountId": "123456789012",
+          "userName": "Admin"
+        },
+        "webIdFederationData": {},
+        "attributes": {
+          "creationDate": "2022-04-12T08:02:26Z",
+          "mfaAuthenticated": "false"
+        }
+      }
+    },
+    "eventTime": "2022-04-12T08:28:28Z",
+    "eventSource": "organizations.amazonaws.com",
+    "eventName": "CloseAccount",
+    "awsRegion": "us-east-1",
+    "sourceIPAddress": "80.195.225.65",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0) Gecko/20100101 Firefox/91.0",
+    "requestParameters": {
+      "accountId": "012345678901"
+    },
+    "responseElements": null,
+    "requestID": "b481fe1c-73a4-4549-8a2f-123456789012",
+    "eventID": "61ec2919-1e97-4ed1-bea1-123456789012",
+    "readOnly": false,
+    "eventType": "AwsApiCall",
+    "managementEvent": true,
+    "recipientAccountId": "123456789012",
+    "eventCategory": "Management"
+}
