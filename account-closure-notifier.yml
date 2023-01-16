@@ -40,11 +40,7 @@ Resources:
     Type: AWS::SNS::Topic
     Properties: 
       TopicName: !Sub "${ResourcePrefix}-sns-topic"
-    Metadata:
-      cfn_nag:
-        rules_to_suppress:
-          - id: W47
-            reason: "The data stored in SNS does not contain sensitive information, using default protections provided by SNS"
+      KmsMasterKeyId: alias/aws/sns  
 
   LambdaLogGroup:
     Type: AWS::Logs::LogGroup

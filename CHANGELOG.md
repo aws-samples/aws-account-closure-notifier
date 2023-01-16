@@ -9,3 +9,9 @@
 ### Changed
 
 Initial open source release, updated Lambda Powertool dependencies.
+
+## [1.0.1] - 16-01-2023
+
+### Changed
+
+- Enabled SSE encrytion for SNS Topic
