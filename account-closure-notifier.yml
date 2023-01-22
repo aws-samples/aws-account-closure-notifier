@@ -42,16 +42,43 @@ Resources:
       TopicName: !Sub "${ResourcePrefix}-sns-topic"
       KmsMasterKeyId: alias/aws/sns  
 
+  CustomerManagedKey:
+    Type: AWS::KMS::Key
+    Properties: 
+      Description: "CMK for CloudWatch Log Group encryption"
+      Enabled: true
+      KeyPolicy:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS: !Sub 'arn:aws:iam::${AWS::AccountId}:root'
+            Action: 'kms:*'
+            Resource: '*'
+          - Effect: Allow
+            Principal:
+              Service: !Sub 'logs.${AWS::Region}.amazonaws.com'
+            Action:
+              - kms:Encrypt*
+              - kms:Decrypt*
+              - kms:ReEncrypt*
+              - kms:GenerateDataKey*
+              - kms:Describe*
+            Resource: '*'
+            Condition:
+              ArnEquals:
+                "kms:EncryptionContext:aws:logs:arn": !Sub "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/${ResourcePrefix}-lambda"
+      KeySpec: SYMMETRIC_DEFAULT
+      KeyUsage: ENCRYPT_DECRYPT
+      MultiRegion: false
+      PendingWindowInDays: 30
+
   LambdaLogGroup:
     Type: AWS::Logs::LogGroup
     Properties:
       LogGroupName: !Sub '/aws/lambda/${ResourcePrefix}-lambda'
       RetentionInDays: 60
-    Metadata:
-      cfn_nag:
-        rules_to_suppress:
-          - id: W84
-            reason: "The data stored in CloudWatch Logs does not contain sensitive information, using default protections provided by CloudWatch logs"
+      KmsKeyId: !GetAtt 'CustomerManagedKey.Arn'
 
   LambdaExecutionRole:
     Type: 'AWS::IAM::Role'
