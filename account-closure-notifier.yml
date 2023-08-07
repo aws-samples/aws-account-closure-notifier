@@ -120,7 +120,7 @@ Resources:
     Properties:
       FunctionName: !Sub "${ResourcePrefix}-lambda" 
       Role: !GetAtt LambdaExecutionRole.Arn
-      Runtime: python3.9
+      Runtime: python3.10
       Handler: index.lambda_handler
       Environment:
         Variables:
@@ -132,7 +132,7 @@ Resources:
       TracingConfig:
         Mode: Active
       Layers:
-        - !Sub "arn:aws:lambda:${AWS::Region}:017000801446:layer:AWSLambdaPowertoolsPythonV2:17"
+        - !Sub "arn:aws:lambda:${AWS::Region}:017000801446:layer:AWSLambdaPowertoolsPythonV2:40"
       Code:
         ZipFile: |
           # Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
