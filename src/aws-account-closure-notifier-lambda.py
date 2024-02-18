@@ -20,16 +20,19 @@ import os
 import urllib3 # type: ignore
 from aws_lambda_powertools import Tracer # type: ignore
 from aws_lambda_powertools import Logger # type: ignore
-import distutils
-from distutils import util
 
 tracer = Tracer(service="aws-account-closure-notifier")
 logger = Logger(service="aws-account-closure-notifier")
 sns_client = boto3.client('sns')
 
 SLACK_ENDPOINT = os.environ.get('SLACK_ENDPOINT')
-SLACK_NOTIFICATION = distutils.util.strtobool(os.environ.get("SLACK_NOTIFICATION", "false"))
+SLACK_NOTIFICATION = os.environ.get("SLACK_NOTIFICATION", "false")
 SNS_TOPIC_ARN = os.environ.get("SNS_TOPIC_ARN")
+
+if SLACK_NOTIFICATION == "true":
+    SLACK_NOTIFICATION_BOOL = True
+else:
+    SLACK_NOTIFICATION_BOOL = False
 
 @tracer.capture_method
 def send_sns_notification(message_detail):
@@ -127,7 +130,7 @@ def lambda_handler(event, context):
         logger.info(f"Received CloudWatch event of {message_detail['eventName']} API for Account ID {message_detail['requestParameters']['accountId']}")
         logger.info(f"Sending SNS Notification for received event {message_detail['eventName']}")
         send_sns_notification(message_detail)
-        if SLACK_NOTIFICATION:
+        if SLACK_NOTIFICATION_BOOL:
             logger.info(f"Sending SLACK Notification for received event {message_detail['eventName']}")
             send_slack_notification(message_detail)
     else:
