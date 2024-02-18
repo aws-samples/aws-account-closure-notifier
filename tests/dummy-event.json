@@ -1,4 +1,13 @@
 {
+  "version": "0",
+  "id": "123456-EXAMPLE-GUID-123456",
+  "detail-type": "AWS API Call via CloudTrail",
+  "source": "aws.organizations",
+  "account": "123456789012",
+  "time": "2017-03-09T22:44:26Z",
+  "region": "us-east-1",
+  "resources": [],
+  "detail": {
     "eventVersion": "1.08",
     "userIdentity": {
       "type": "AssumedRole",
@@ -38,4 +47,5 @@
     "managementEvent": true,
     "recipientAccountId": "123456789012",
     "eventCategory": "Management"
+  }
 }
